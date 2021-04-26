@@ -5,12 +5,11 @@ import { CarComponent } from './car.component';
 describe('CarComponent', () => {
   let component: CarComponent;
   let fixture: ComponentFixture<CarComponent>;
-
+  //
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CarComponent ]
-    })
-    .compileComponents();
+      declarations: [CarComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
