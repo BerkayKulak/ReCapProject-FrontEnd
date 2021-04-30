@@ -2,14 +2,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ColorComponent } from './color.component';
 
-describe('CategoryComponent', () => {
+describe('ColorComponent', () => {
   let component: ColorComponent;
   let fixture: ComponentFixture<ColorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ColorComponent],
-    }).compileComponents();
+      declarations: [ ColorComponent ]
+    })
+    .compileComponents();
   });
 
   beforeEach(() => {

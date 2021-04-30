@@ -1,12 +1,5 @@
-<h4>Markalar</h4>
 <ul class="list-group">
-  <li
-    (click)="clearCurrentBrand()"
-    [class]="getAllBrandClass()"
-    routerLink="/cars"
-  >
-    Tüm Markalar
-  </li>
+  <li [class]="getAllBrandClass()" routerLink="/cars">Markalar</li>
   <li
     (click)="setCurrentBrand(brand)"
     routerLink="/cars/brand/{{ brand.brandId }}"
@@ -16,3 +9,4 @@
     {{ brand.brandName }}
   </li>
 </ul>
+<h5 *ngIf="currentBrand">{{ currentBrand.brandName }} seçtiniz</h5>

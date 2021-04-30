@@ -10,26 +10,22 @@ import { ColorService } from 'src/app/services/color.service';
 export class ColorComponent implements OnInit {
   colors: Color[] = [];
   currentColor: Color;
-
+  dataLoaded = false;
   constructor(private colorService: ColorService) {}
 
   ngOnInit(): void {
     this.getColors();
   }
-
   getColors() {
     this.colorService.getColors().subscribe((response) => {
       this.colors = response.data;
-      //console.log(this.colors);
+      this.dataLoaded = true;
+      console.log(this.colors);
     });
   }
 
   setCurrentColor(color: Color) {
     this.currentColor = color;
-  }
-
-  clearCurrentColor() {
-    this.currentColor = { colorId: 0, colorName: '' };
   }
 
   getCurrentColorClass(color: Color) {
