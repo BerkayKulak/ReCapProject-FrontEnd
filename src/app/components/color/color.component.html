@@ -1,6 +1,11 @@
-<h4>Renkler</h4>
 <ul class="list-group">
-  <li [class]="getAllColorClass()" routerLink="/cars">Tüm ürünler</li>
+  <li
+    (click)="clearCurrentColor()"
+    [class]="getAllColorClass()"
+    routerLink="/cars"
+  >
+    Tüm Renkler
+  </li>
   <li
     (click)="setCurrentColor(color)"
     routerLink="/cars/color/{{ color.colorId }}"
@@ -10,5 +15,3 @@
     {{ color.colorName }}
   </li>
 </ul>
-
-<h5 *ngIf="currentColor">{{ currentColor.colorName }} seçtiniz</h5>
