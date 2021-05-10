@@ -18,6 +18,11 @@ export class CardtoService {
     return this.httpClient.get<ListResponseModel<Cardto>>(newPath);
   }
 
+  getCarDetailsbyCarId(carId: number): Observable<ListResponseModel<Cardto>> {
+    let newPath = this.apiUrl + 'products/getcardetailsbycarid?carId=' + carId;
+    return this.httpClient.get<ListResponseModel<Cardto>>(newPath);
+  }
+
   getCarsByBrandId(brandId: number): Observable<ListResponseModel<Cardto>> {
     let newPath = this.apiUrl + 'products/getcarsbybrandid?brandId=' + brandId;
     return this.httpClient.get<ListResponseModel<Cardto>>(newPath);

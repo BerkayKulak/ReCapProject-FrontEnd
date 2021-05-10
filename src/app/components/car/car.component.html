@@ -1,3 +1,17 @@
+<div class="mb-3">
+  <label for="filterText" class="form-label">Araba Ara</label>
+  <input
+    type="text"
+    [(ngModel)]="filterText"
+    class="form-control"
+    id="filterText"
+    placeholder="arama ifadesi giriniz"
+  />
+</div>
+<div *ngIf="filterText.length > 2" class="alert alert-primary">
+  {{ filterText }} aradınız
+</div>
+
 <div
   *ngIf="dataLoaded == false"
   class="spinner-border text-primary"
@@ -5,40 +19,45 @@
 >
   <span class="visually-hidden">Loading...</span>
 </div>
-<table *ngIf="dataLoaded == true" class="table table-bordered">
-  <thead>
-    <tr>
-      <!-- <th>Id</th>
-      <th>Marka</th>
-      <th>Renk</th>
-      <th>Araba adı</th>
-      <th>Model yılı</th>
-      <th>Fiyat</th>
-      <th>Açıklama</th> -->
-      <th>Araba</th>
-      <th>Marka</th>
-      <th>Renk</th>
-      <th>Fiyat</th>
-      <th>Model Yılı</th>
-      <th>Görsel</th>
-      <th>Detay</th>
-    </tr>
-  </thead>
-  <tr *ngFor="let cardto of cardtos">
-    <td>{{ cardto.carName }}</td>
-    <td>{{ cardto.brandName }}</td>
-    <td>{{ cardto.colorName }}</td>
-    <td>{{ cardto.dailyPrice }}</td>
-    <td>{{ cardto.modelYear }}</td>
+<div class="row">
+  <div
+    class="col-lg-4 col-md-6 shadow-lg p-3 mb-5 bg-body rounded"
+    *ngFor="let car of cardtos | filterPipe:filterText"
+  >
+    <div class="card border-0 mb-3" style="width: 18rem">
+      <img
+        [src]="apiUrl + car.imagePath[0]"
+        class="card-img-top"
+        alt="Image"
+        width="200"
+        height="200"
+      />
+      <div class="card-body text-center">
+        <h4>
+          <a
+            routerLink="/cardetail/{{ car.carId }}"
+            class="card-title text-decoration-none h5"
+            style="color: #007bff"
+            >{{ car.carName | uppercase }}
+          </a>
+        </h4>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <span class="float-start">Marka</span>
+          <span class="float-end">{{ car.brandName }}</span>
+        </li>
 
-    <td>
-      <img width="100px" height="100px" [src]="apiUrl + cardto.imagePath[0]" />
-    </td>
-
-    <td>
-      <button class="btn-default" style="background-color: green; color: white">
-        Detay Sayfasına Git
-      </button>
-    </td>
-  </tr>
-</table>
+        <p class="card-text text-center h3 mt-3">{{ car.dailyPrice }}₺</p>
+      </ul>
+      <div class="card-body">
+        <div class="d-flex action justify-content-between">
+          <a href="" class="btn btn-success">Kirala</a>
+          <a routerLink="/cardetail/{{ car.carId }}" class="btn btn-primary"
+            >Detaylar</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

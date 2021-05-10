@@ -1,0 +1,43 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Araba Adı</th>
+      <th>Marka Adı</th>
+      <th>Resim Adı</th>
+      <th>Fiyat</th>
+      <th>Kdvli Fiyat</th>
+      <th>Yıl</th>
+      <th>Açıklama</th>
+      <th>Görsel</th>
+      <th>Sepete Ekle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let cardto of carDto">
+      <td>{{ cardto.carName }}</td>
+      <td>{{ cardto.brandName }}</td>
+      <td>{{ cardto.colorName }}</td>
+      <td>{{ cardto.dailyPrice | currency }}</td>
+      <td>{{ cardto.dailyPrice | vatAdded: 18 | currency }}</td>
+      <td>{{ cardto.modelYear }}</td>
+      <td>{{ cardto.description }}</td>
+
+      <td>
+        <img
+          width="100px"
+          height="100px"
+          [src]="defaultPath + cardto.imagePath[0]"
+        />
+      </td>
+      <td>
+        <button
+          (click)="addToCart(cardto)"
+          type="button"
+          class="btn btn-success"
+        >
+          Sepete Ekle
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
