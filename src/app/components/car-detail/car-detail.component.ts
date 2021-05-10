@@ -6,6 +6,7 @@ import { Cardto } from 'src/app/models/cardto';
 import { CarImageService } from 'src/app/services/car-image.service';
 import { CarService } from 'src/app/services/car.service';
 import { CardtoService } from 'src/app/services/cardto.service';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-car-detail',
@@ -24,7 +25,8 @@ export class CarDetailComponent implements OnInit {
     private cardtoService: CardtoService,
     private carImageService: CarImageService,
     private activatedRoute: ActivatedRoute,
-    private toastrService:ToastrService
+    private toastrService:ToastrService,
+    private cartService:CartService
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +46,13 @@ export class CarDetailComponent implements OnInit {
   }
 
   addToCart(car:Cardto){
-    
+
     this.toastrService.success("Sepete eklendi",car.carName)
+    this.cartService.addToCart(car);
   }
+
+
+
+
+
 }
