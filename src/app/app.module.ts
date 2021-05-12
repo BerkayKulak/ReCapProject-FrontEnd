@@ -16,6 +16,12 @@ import { FilterPipePipe } from './pipes/filter-pipe.pipe';
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { CartSummaryComponent } from './components/cart-summary/cart-summary.component';
+import { ColorPipePipe } from './pipes/color-pipe.pipe';
+import { BrandPipePipe } from './pipes/brand-pipe.pipe';
+import { FilterCarComponent } from './components/filter-car/filter-car.component';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +35,9 @@ import { CartSummaryComponent } from './components/cart-summary/cart-summary.com
     VatAddedPipe,
     FilterPipePipe,
     CartSummaryComponent,
+    ColorPipePipe,
+    BrandPipePipe,
+    FilterCarComponent,
   ],
   imports: [BrowserModule,BrowserAnimationsModule, AppRoutingModule, HttpClientModule,FormsModule,ToastrModule.forRoot({
     positionClass:"toast-bottom-right"
