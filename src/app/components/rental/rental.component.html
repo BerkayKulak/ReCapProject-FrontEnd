@@ -1,103 +1,85 @@
+<!-- <div *ngIf="dataLoaded == false" class="spinner-border text-secondary" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-      <script src="https://js.stripe.com/v2/" type="text/javascript"></script>
-      <form
-        accept-charset="UTF-8"
-        action="/"
-        class="require-validation"
-        data-cc-on-file="false"
-        data-stripe-publishable-key="pk_bQQaTxnaZlzv4FnnuZ28LFHccVSaj"
-        id="payment-form"
-        method="post"
-      >
-        <div style="margin: 0; padding: 0; display: inline">
-          <input name="utf8" type="hidden" value="✓" /><input
-            name="_method"
-            type="hidden"
-            value="PUT"
-          /><input
-            name="authenticity_token"
-            type="hidden"
-            value="qLZ9cScer7ZxqulsUWazw4x3cSEzv899SP/7ThPCOV8="
-          />
-        </div>
-        <div class="form-row">
-          <div class="col-xs-12 form-group required">
-            <label class="control-label">Name on Card</label>
-            <input class="form-control" size="4" type="text" />
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="col-xs-12 form-group card required">
-            <label class="control-label">Card Number</label>
-            <input
-              autocomplete="off"
-              class="form-control card-number"
-              size="20"
-              type="text"
-            />
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="col-xs-4 form-group cvc required">
-            <label class="control-label">CVC</label>
-            <input
-              autocomplete="off"
-              class="form-control card-cvc"
-              placeholder="ex. 311"
-              size="4"
-              type="text"
-            />
-          </div>
-          <div class="col-xs-4 form-group expiration required">
-            <label class="control-label">Expiration</label>
-            <input
-              class="form-control card-expiry-month"
-              placeholder="MM"
-              size="2"
-              type="text"
-            />
-          </div>
-          <div class="col-xs-4 form-group expiration required">
-            <label class="control-label"> </label>
-            <input
-              class="form-control card-expiry-year"
-              placeholder="YYYY"
-              size="4"
-              type="text"
-            />
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="col-md-12">
-            <div class="form-control total btn btn-info">
-              Total:
-              <span class="amount">$300</span>
+<table *ngIf="dataLoaded == true" class="table">
+    <thead class="table-secondary">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Rent Date</th>
+        <th scope="col">Return Date</th>
+        <th scope="col">Sil</th>
+        <th scope="col">Sonlandır</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rental of rentals">
+        <td>{{rental.rentalId}}</td>
+        <td>{{rental.rentDate}}</td>
+        <td>{{rental.returnDate}}</td>
+        <td class="col-md-3">
+          <button class="btn btn-danger me-2 mb-2" (click)="delete(rental)">Delete</button>
+
+        </td>
+        <td class="col-md-3">
+        <button class="btn btn-primary me-2 mb-2" (click)="endRental(rental)">End</button>
+      </td>
+      </tr>
+    </tbody>
+  </table> -->
+
+  <div class="card">
+    <div class="card-top border-bottom text-center"> <a href="#">Alışverişe Geri Dön</a> <span id="logo"></span> </div>
+    <div class="card-body">
+        <div class="row upper"> <span><i class="fa fa-check-circle-o"></i> Alışveriş Sepeti</span> <span><i class="fa fa-check-circle-o"></i> Sipariş Detayları</span> > </div>
+        <div class="row">
+            <div class="col-md-7">
+                <div class="left border">
+                    <div class="row"> <span class="header">Payment</span>
+                        <div class="icons"> <img src="https://img.icons8.com/color/48/000000/visa.png" /> <img src="https://img.icons8.com/color/48/000000/mastercard-logo.png" /> <img src="https://img.icons8.com/color/48/000000/maestro.png" /> </div>
+                    </div>
+                    <form> <span>Cardholder's name:</span> <input placeholder="Linda Williams"> <span>Card Number:</span> <input placeholder="0125 6780 4567 9909">
+                        <div class="row">
+                            <div class="col-4"><span>Expiry date:</span> <input placeholder="YY/MM"> </div>
+                            <div class="col-4"><span>CVV:</span> <input id="cvv"> </div>
+                        </div> <input type="checkbox" id="save_card" class="align-left"> <label for="save_card">Kartı Kaydet</label>
+                    </form>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="col-md-12 form-group">
-            <button
-              class="form-control btn btn-primary submit-button"
-              type="submit"
-            >
-              Pay »
-            </button>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="col-md-12 error form-group hide">
-            <div class="alert-danger alert">
-              Please correct the errors and try again.
+            <div class="col-md-5" >
+                <div class="right border" *ngFor="let item of carDto">
+                    <div class="header">Sipariş Özeti</div>
+                    <p>2 items</p>
+                    <div class="row item"  >
+                        <div class="col-4 align-self-center"><img class="img-fluid" [src] = "defaultPath + item.imagePath[0]"></div>
+                        <div class="col-8">
+
+                            <div class="row text-muted">{{item.description}}</div>
+                            <div class="row">Qty:1</div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="row lower">
+                        <div class="col text-left">Kiralama ücreti</div>
+                        <div class="col text-right">{{item.dailyPrice}}</div>
+                    </div>
+                    <div class="row lower">
+                        <div class="col text-left">Delivery</div>
+                        <div class="col text-right">Free</div>
+                    </div>
+                    <div class="row lower">
+                        <div class="col text-left"><b>Total to pay</b></div>
+                        <div class="col text-right"><b>$ 46.98</b></div>
+                    </div>
+                    <div class="row lower">
+                        <div class="col text-left"><a href="#"><u>Add promo code</u></a></div>
+                    </div> <button class="btn">Place order</button>
+
+                </div>
             </div>
-          </div>
         </div>
-      </form>
     </div>
-    <div class="col-md-4"></div>
-  </div>
+    <div> </div>
 </div>
