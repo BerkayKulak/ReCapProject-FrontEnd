@@ -21,6 +21,8 @@ export class CarComponent implements OnInit {
   apiUrl = 'https://localhost:44322/Images/';
   defaultImage = '/Images/default.png';
   filterText = "";
+  public carsPerPage = 3;
+  public selectedPage = 1;
 
   constructor(
     private carService: CarService,
@@ -38,6 +40,7 @@ export class CarComponent implements OnInit {
         this.getCarsByColorId(params['colorId']);
       } else {
         this.getCarDetails();
+
       }
       if (params['carId']) {
         this.getCarDetailsbyCarId(params['carId']);
@@ -45,6 +48,7 @@ export class CarComponent implements OnInit {
     });
   }
   getCarsByBrandId(brandId: number) {
+
     this.cardtoService.getCarsByBrandId(brandId).subscribe((response) => {
       this.cardtos = response.data;
       this.dataLoaded = true;
@@ -65,12 +69,24 @@ export class CarComponent implements OnInit {
     });
   }
 
+  changePage(p:number){
+    this.selectedPage = p;
+    console.log(p);
+  }
+
   getCarDetails() {
+   
     this.cardtoService.getCarDetails().subscribe((response) => {
-      this.cardtos = response.data;
+      this.cardtos = response.data
+      console.log(this.cardtos);
+
       this.dataLoaded = true;
+
+
     });
   }
+
+
 
   getCarDetailsbyCarId(cardId: number) {
     this.cardtoService.getCarDetailsbyCarId(cardId).subscribe((response) => {
