@@ -1,4 +1,4 @@
-<!-- <div *ngIf="dataLoaded == false" class="spinner-border text-secondary" role="status">
+<div *ngIf="dataLoaded == false" class="spinner-border text-secondary" role="status">
   <span class="visually-hidden">Loading...</span>
 </div>
 
@@ -6,80 +6,30 @@
     <thead class="table-secondary">
       <tr>
         <th scope="col">Id</th>
+        <th scope="col">Brand Name</th>
+        <th scope="col">Car Name</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Company Name</th>
         <th scope="col">Rent Date</th>
         <th scope="col">Return Date</th>
-        <th scope="col">Sil</th>
-        <th scope="col">Sonlandır</th>
-
+        <th scope="col">Operations</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let rental of rentals">
-        <td>{{rental.rentalId}}</td>
+        <td>{{rental.id}}</td>
+        <td>{{rental.brandName}}</td>
+        <td>{{rental.carName}}</td>
+        <td>{{rental.firstName}}</td>
+        <td>{{rental.lastName}}</td>
+        <td>{{rental.companyName}}</td>
         <td>{{rental.rentDate}}</td>
         <td>{{rental.returnDate}}</td>
         <td class="col-md-3">
           <button class="btn btn-danger me-2 mb-2" (click)="delete(rental)">Delete</button>
-
+          <button class="btn btn-primary me-2 mb-2" (click)="endRental(rental)">End</button>
         </td>
-        <td class="col-md-3">
-        <button class="btn btn-primary me-2 mb-2" (click)="endRental(rental)">End</button>
-      </td>
       </tr>
     </tbody>
-  </table> -->
-
-  <div class="card">
-    <div class="card-top border-bottom text-center"> <a href="#">Alışverişe Geri Dön</a> <span id="logo"></span> </div>
-    <div class="card-body">
-        <div class="row upper"> <span><i class="fa fa-check-circle-o"></i> Alışveriş Sepeti</span> <span><i class="fa fa-check-circle-o"></i> Sipariş Detayları</span> > </div>
-        <div class="row">
-            <div class="col-md-7">
-                <div class="left border">
-                    <div class="row"> <span class="header">Payment</span>
-                        <div class="icons"> <img src="https://img.icons8.com/color/48/000000/visa.png" /> <img src="https://img.icons8.com/color/48/000000/mastercard-logo.png" /> <img src="https://img.icons8.com/color/48/000000/maestro.png" /> </div>
-                    </div>
-                    <form> <span>Cardholder's name:</span> <input placeholder="Linda Williams"> <span>Card Number:</span> <input placeholder="0125 6780 4567 9909">
-                        <div class="row">
-                            <div class="col-4"><span>Expiry date:</span> <input placeholder="YY/MM"> </div>
-                            <div class="col-4"><span>CVV:</span> <input id="cvv"> </div>
-                        </div> <input type="checkbox" id="save_card" class="align-left"> <label for="save_card">Kartı Kaydet</label>
-                    </form>
-                </div>
-            </div>
-            <div class="col-md-5" >
-                <div class="right border" *ngFor="let item of carDto">
-                    <div class="header">Sipariş Özeti</div>
-                    <p>2 items</p>
-                    <div class="row item"  >
-                        <div class="col-4 align-self-center"><img class="img-fluid" [src] = "defaultPath + item.imagePath[0]"></div>
-                        <div class="col-8">
-
-                            <div class="row text-muted">{{item.description}}</div>
-                            <div class="row">Qty:1</div>
-                        </div>
-                    </div>
-
-                    <hr>
-                    <div class="row lower">
-                        <div class="col text-left">Kiralama ücreti</div>
-                        <div class="col text-right">{{item.dailyPrice}}</div>
-                    </div>
-                    <div class="row lower">
-                        <div class="col text-left">Delivery</div>
-                        <div class="col text-right">Free</div>
-                    </div>
-                    <div class="row lower">
-                        <div class="col text-left"><b>Total to pay</b></div>
-                        <div class="col text-right"><b>$ 46.98</b></div>
-                    </div>
-                    <div class="row lower">
-                        <div class="col text-left"><a href="#"><u>Add promo code</u></a></div>
-                    </div> <button class="btn">Place order</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <div> </div>
-</div>
+  </table>

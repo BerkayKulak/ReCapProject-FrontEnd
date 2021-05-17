@@ -4,8 +4,7 @@ import { Observable } from 'rxjs';
 import { CreditCard } from '../models/creditCard';
 import { ListResponseModel } from '../models/listResponseModel';
 import { ResponseModel } from '../models/responseModel';
-import { SingleResponseModel } from '../models/SingleResponseModel';
-
+import { SingleResponseModel } from '../models/singleResponseModel';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +13,6 @@ export class CreditCardService {
 
   apiUrl = 'https://localhost:44322/api/';
   constructor(private httpClient: HttpClient) {}
-
-
-  getAllCards(): Observable<ListResponseModel<CreditCard>> {
-    let newPath = this.apiUrl + 'CreditCards/getall';
-    return this.httpClient.get<ListResponseModel<CreditCard>>(newPath);
-  }
-
-  
 
   getAllByCustomerId(customerId:number) : Observable<ListResponseModel<CreditCard>>{
     let newPath = this.apiUrl + "creditcards/getallbycustomerid?customerid="+customerId

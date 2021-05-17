@@ -1,43 +1,128 @@
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Araba Adı</th>
-      <th>Marka Adı</th>
-      <th>Resim Adı</th>
-      <th>Fiyat</th>
-      <th>Kdvli Fiyat</th>
-      <th>Yıl</th>
-      <th>Açıklama</th>
-      <th>Görsel</th>
-      <th>Sepete Ekle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let cardto of carDto">
-      <td>{{ cardto.carName }}</td>
-      <td>{{ cardto.brandName }}</td>
-      <td>{{ cardto.colorName }}</td>
-      <td>{{ cardto.dailyPrice | currency }}</td>
-      <td>{{ cardto.dailyPrice | vatAdded: 18 | currency }}</td>
-      <td>{{ cardto.modelYear }}</td>
-      <td>{{ cardto.description }}</td>
+<!DOCTYPE html>
+<html lang="en">
 
-      <td>
-        <img
-          width="100px"
-          height="100px"
-          [src]="defaultPath + cardto.imagePath[0]"
-        />
-      </td>
-      <td>
-        <button
-          (click)="addToCart(cardto)"
-          type="button"
-          class="btn btn-success"
-        >
-          Sepete Ekle
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Amoeba Bootstrap Template - Home</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Lato:400,300,700,900" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="C:\kamp-frontend\RentACarProject\src\app\components\car-detail\assets\vendor\bootstrap\css\bootstrap.min.css" rel="stylesheet">
+  <link href="C:\kamp-frontend\RentACarProject\src\app\components\car-detail\assets\vendor\bootstrap-icons\bootstrap-icons.css" rel="stylesheet">
+  <link href="C:\kamp-frontend\RentACarProject\src\app\components\car-detail\assets\vendor\glightbox\css\glightbox.min.css" rel="stylesheet">
+  <link href="C:\kamp-frontend\RentACarProject\src\app\components\car-detail\assets\vendor\swiper\swiper-bundle.min.css" rel="stylesheet">
+
+  <link href="C:\kamp-frontend\RentACarProject\src\app\components\car-detail\assets\css\style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <main id="main" *ngFor="let image of carImages">
+
+    <section id="about" class="about mb-10" >
+      <div class="container">
+
+        <div class="section-title">
+          <h2>{{ carDetail.carName }}</h2>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6 order-1 order-lg-2">
+            <img src="{{carImageBasePath}}{{image.imagePath}}" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1">
+            <h3>{{ carDetail.brandName }}</h3>
+            <p class="fst-italic">
+              {{ carDetail.modelYear }}
+            </p>
+
+            <p>
+              {{ carDetail.description }}
+            </p>
+          </div>
+        </div>
+        <button id = "button1" (click)="addToCart(carDetail)" class="btn btn-primary mr-20">Add to Cart</button>
+        <button id = "button2"  type="button" routerLink="/rentals/car/{{ carDetail.id }}" class="btn btn-secondary">Rent</button>
+      </div>
+
+    </section><!-- End About Us Section -->
+
+    <!-- ======= Contact Us Section ======= -->
+    <section id="contact" class="contact section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Bizimle İletişime Geçin</h2>
+          <p>Sınırsız Erişim. Gizlilik Dostu. Sonuçlar ve Yanıtlar. %100 Güvenli. Her Zaman Gerçekler. Sunulan olanaklar: %100 Güvenli, %100 Gizlilik Korumalı.</p>
+        </div>
+
+        <div class="row ">
+
+          <div class="col-lg-4 col-md-6">
+            <div class="contact-about">
+              <h3>Berkay Galeri</h3>
+              <p>En son teknolojik yenilikleri mi takip etmek istiyorsunuz? Hürriyet teknoloji haberleri ve yenilikler için hemen İletişime geçin!</p>
+              <div class="social-links">
+                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6">
+
+          </div>
+
+          <div class="col-lg-5 col-md-12">
+            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+              <div class="form-group">
+                <input type="text" name="name" class="form-control" id="name" placeholder="Adınız" required>
+              </div>
+              <div class="form-group mt-3">
+                <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Konu" required>
+              </div>
+              <div class="form-group mt-3">
+                <textarea class="form-control" name="message" rows="5" placeholder="Mesajınız" required></textarea>
+              </div>
+              <div class="my-3">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your message has been sent. Thank you!</div>
+              </div>
+              <div class="text-center"><button type="submit">Mesaj Gönder</button></div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Us Section -->
+
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+</body>
+
+
+</html>

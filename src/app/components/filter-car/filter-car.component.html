@@ -2,11 +2,13 @@
   <div class="row">
     <div class="col-md-5">
       <select class="form-select" id="brandselect" [(ngModel)]="currentBrandId">
-        <option [ngValue]="undefined" selected>--- Choose a Brand ---</option>
+        <option [ngValue]="undefined" disabled selected>
+          --- Choose a Brand ---
+        </option>
         <option
           *ngFor="let brand of brands"
-          [value]="brand.brandId"
-          [selected]="setCurrentBrand(brand.brandId)"
+          [value]="brand.id"
+          [selected]="setCurrentBrand(brand.id)"
         >
           {{ brand.brandName }}
         </option>
@@ -14,11 +16,13 @@
     </div>
     <div class="col-md-5">
       <select class="form-select" id="colorselect" [(ngModel)]="currentColorId">
-        <option [ngValue]="undefined" selected>--- Choose a Color ---</option>
+        <option [ngValue]="undefined" disabled selected>
+          --- Choose a Color ---
+        </option>
         <option
           *ngFor="let color of colors"
-          [value]="color.colorId"
-          [selected]="setCurrentColor(color.colorId)"
+          [value]="color.id"
+          [selected]="setCurrentColor(color.id)"
         >
           {{ color.colorName }}
         </option>
@@ -26,14 +30,14 @@
     </div>
     <div class="col-md-1">
       <button
-        class="btn btn-primary"
+        class="btn btn-danger"
         routerLink="/cars/filter/{{ currentBrandId }}/{{ currentColorId }}"
       >
         Filter
       </button>
     </div>
     <div class="col-md-1">
-      <button class="btn btn-warning" routerLink="/cars">Clear</button>
-    </div>
+        <button class="btn btn-warning" routerLink="/cars">Clear</button>
+      </div>
   </div>
 </div>

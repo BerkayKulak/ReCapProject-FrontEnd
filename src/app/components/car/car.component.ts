@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Car } from 'src/app/models/car';
-import { CarImage } from 'src/app/models/car-image';
-import { Cardto } from 'src/app/models/cardto';
-import { CarImageService } from 'src/app/services/car-image.service';
 import { CarService } from 'src/app/services/car.service';
-import { CardtoService } from 'src/app/services/cardto.service';
+import { CartService } from 'src/app/services/cart.service';
+import { RentalService } from 'src/app/services/rental.service';
 
 @Component({
   selector: 'app-car',
@@ -14,54 +13,33 @@ import { CardtoService } from 'src/app/services/cardto.service';
 })
 export class CarComponent implements OnInit {
   cars: Car[] = [];
-  cardtos: Cardto[] = [];
-  dataLoaded = false;
-  carImages: CarImage[] = [];
-  currentCar: Cardto;
-  apiUrl = 'https://localhost:44322/Images/';
-  defaultImage = '/Images/default.png';
-  filterText = "";
-  public carsPerPage = 3;
-  public selectedPage = 1;
+
+  carImageBasePath = 'https://localhost:44322/Images/';
+  dataLoaded = true;
+  filterText = '';
 
   constructor(
     private carService: CarService,
-    private cardtoService: CardtoService,
-    private carImageService: CarImageService,
-    private activatedRoute: ActivatedRoute
+    private activatedRouted: ActivatedRoute,
+    private toastrService: ToastrService,
+    private cartService: CartService,
+    private rentalService: RentalService
   ) {}
 
   ngOnInit(): void {
-    //this.getCars();
-    this.activatedRoute.params.subscribe((params) => {
-      if (params['brandId']) {
-        this.getCarsByBrandId(params['brandId']);
+    this.activatedRouted.params.subscribe((params) => {
+      if (params['brandId'] && params['colorId']) {
+        this.getCarsByBrandIdAndColorId(params['brandId'], params['colorId']);
       } else if (params['colorId']) {
-        this.getCarsByColorId(params['colorId']);
+        this.getCarsByColor(params['colorId']);
+      } else if (params['brandId']) {
+        this.getCarsByBrand(params['brandId']);
       } else {
-        this.getCarDetails();
-
-      }
-      if (params['carId']) {
-        this.getCarDetailsbyCarId(params['carId']);
+        this.getCars();
       }
     });
   }
-  getCarsByBrandId(brandId: number) {
 
-    this.cardtoService.getCarsByBrandId(brandId).subscribe((response) => {
-      this.cardtos = response.data;
-      this.dataLoaded = true;
-      console.log(this.cardtos);
-    });
-  }
-
-  getCarsByColorId(colorId: number) {
-    this.cardtoService.getCarsByColorId(colorId).subscribe((response) => {
-      this.cardtos = response.data;
-      this.dataLoaded = true;
-    });
-  }
   getCars() {
     this.carService.getCars().subscribe((response) => {
       this.cars = response.data;
@@ -69,42 +47,49 @@ export class CarComponent implements OnInit {
     });
   }
 
-  changePage(p:number){
-    this.selectedPage = p;
-    console.log(p);
-  }
-
-  getCarDetails() {
-   
-    this.cardtoService.getCarDetails().subscribe((response) => {
-      this.cardtos = response.data
-      console.log(this.cardtos);
-
+  getCarsByColor(colorId: number) {
+    this.carService.getCarsByColor(colorId).subscribe((response) => {
+      this.cars = response.data;
       this.dataLoaded = true;
-
-
     });
   }
 
-
-
-  getCarDetailsbyCarId(cardId: number) {
-    this.cardtoService.getCarDetailsbyCarId(cardId).subscribe((response) => {
-      this.cardtos = response.data;
+  getCarsByBrand(brandId: number) {
+    this.carService.getCarsByBrand(brandId).subscribe((response) => {
+      this.cars = response.data;
       this.dataLoaded = true;
-      console.log(this.cardtos);
     });
   }
 
-  setCurrentCar(car: Cardto) {
-    this.currentCar = car;
+  getCarsByBrandIdAndColorId(brandId: number, colorId: number) {
+    this.carService
+      .getCarsByBrandIdAndColorId(brandId, colorId)
+      .subscribe((response) => {
+        this.cars = response.data;
+        console.log('getCarsByBrandIdAndColorId metodu çalıştı');
+      });
   }
 
-  getCarImagesByCarId(carId: number) {
-    this.carImageService.getCarImagesByCarId(carId).subscribe((response) => {
-      this.carImages = response.data;
-      this.dataLoaded = true;
-      console.log(this.carImages);
-    });
+  getCarImage(car: Car) {
+    if (car.imagePath) {
+      return car.imagePath;
+    } else {
+      return 'default.png';
+    }
+  }
+
+  addToCart(car: Car) {
+    if (car.modelYear < 2018) {
+      this.toastrService.error(
+        'Bu araç kiralanamaz',
+        car.brandName + ' ' + car.carName
+      );
+    } else {
+      this.toastrService.success(
+        'Kiralama Sepetine Eklendi',
+        car.brandName + ' ' + car.carName
+      );
+      this.cartService.addToCart(car);
+    }
   }
 }

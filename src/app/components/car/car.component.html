@@ -1,75 +1,90 @@
+<link
+  href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+  rel="stylesheet"
+  id="bootstrap-css"
+/>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<div
+  *ngIf="dataLoaded == false"
+  class="spinner-border text-secondary"
+  role="status"
+>
+  <span class="visually-hidden">Loading...</span>
+</div>
+
 <div class="mb-3">
-  <label for="filterText" class="form-label">Araba Ara</label>
+  <label for="filterText" class="form-label">Search a Car!</label>
   <input
     type="text"
     [(ngModel)]="filterText"
     class="form-control"
     id="filterText"
-    placeholder="arama ifadesi giriniz"
+    placeholder="Search By Car Detail"
   />
 </div>
-<div *ngIf="filterText.length > 2" class="alert alert-primary">
-  {{ filterText }} aradınız
-</div>
+
 <app-filter-car></app-filter-car>
 
-<div
-  *ngIf="dataLoaded == false"
-  class="spinner-border text-primary"
-  role="status"
->
-  <span class="visually-hidden">Loading...</span>
-</div>
-<div class="row">
-  <div
-    class="col-lg-4 col-md-6 shadow-lg p-3 mb-5 bg-body rounded"
-    *ngFor="let car of cardtos | filterPipe:filterText"
-  >
-    <div class="card border-0 mb-3" style="width: 18rem">
+<div class="row mt-5" *ngIf="dataLoaded == true">
+  <div class="col-sm-4 mb-5"  *ngFor="let car of cars | filterPipe: filterText">
+    <div
+      class="card text-white card-has-bg click-col"
+      routerLink="/cars/cardetail/{{ car.id }}"
+      style="
+        background-image: url('{{ carImageBasePath }}{{ getCarImage(car) }}');
+      "
+    >
       <img
-        [src]="apiUrl + car.imagePath[0]"
-        class="card-img-top"
-        alt="Image"
-        width="200"
-        height="200"
+        class="card-img d-none"
+        src="{{ carImageBasePath }}{{ getCarImage(car) }}"
+        alt="Goverment Lorem Ipsum Sit Amet Consectetur dipisi?"
       />
-      <div class="card-body text-center">
-        <h4>
-          <a
-            routerLink="/cardetail/{{ car.carId }}"
-            class="card-title text-decoration-none h5"
-            style="color: #007bff"
-            >{{ car.carName | uppercase }}
-          </a>
-        </h4>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          <span class="float-start">Marka</span>
-          <span class="float-end">{{ car.brandName }}</span>
-        </li>
+      <div class="card-img-overlay d-flex flex-column">
+        <div class="card-body">
 
-        <p class="card-text text-center h3 mt-3">{{ car.dailyPrice }}₺</p>
-      </ul>
-      <div class="card-body">
-        <div class="d-flex action justify-content-between">
-          <a  routerLink="/carrental/{{ car.carId }}"  class="btn btn-success">Kirala</a>
-          <a routerLink="/cardetail/{{ car.carId }}" class="btn btn-primary"
-            >Detaylar</a
-          >
+          <h4 class="card-title mt-0">
+            <a class="text-white" herf="#"
+              > {{ car.brandName | uppercase }} {{ car.carName }}</a
+            >
+          </h4>
+          <small><i class="far fa-clock"></i> {{ car.modelYear }}</small>
+        </div>
+        <div class="card-footer">
+          <div class="media">
+            <img
+              class="mr-3 rounded-circle"
+              src="{{ carImageBasePath }}{{ getCarImage(car) }}"
+              alt="Generic placeholder image"
+              style="max-width: 50px"
+            />
+            <div class="media-body">
+              <h6 class="my-0 text-white d-block">{{ car.colorName }}</h6>
+              <small>{{ car.dailyPrice | currency }}</small>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-  </div>
-  <div class="row mt-3">
-    <div class="col">
-      <div class="btn-group">
-        <button (click) = "changePage(1)" class="btn btn-outline-primary">1</button>
-        <button (click) = "changePage(2)" class="btn btn-outline-primary">2</button>
-        <button (click) = "changePage(3)" class="btn btn-outline-primary">3</button>
-      </div>
+    <div class="card-body">
+      <section style="float: right">
+        <a (click) = "addToCart(car)" class="btn btn-secondary btn-lg" role="button" aria-disabled="true">Kirala</a>
+      </section>
+      <section style="float: left">
+        <button
+          type="button"
+          routerLink="/cars/cardetail/{{ car.id }}"
+          class="btn btn-primary btn-lg"
+        >
+          Detaylar
+        </button>
+      </section>
     </div>
-  </div>
-</div>
 
+
+
+  </div>
+
+
+</div>

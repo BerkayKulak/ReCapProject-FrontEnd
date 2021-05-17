@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Car } from 'src/app/models/car';
-import { Cardto } from 'src/app/models/cardto';
+import { CarImage } from 'src/app/models/carImage';
 import { CarImageService } from 'src/app/services/car-image.service';
 import { CarService } from 'src/app/services/car.service';
-import { CardtoService } from 'src/app/services/cardto.service';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -14,47 +13,71 @@ import { CartService } from 'src/app/services/cart.service';
   styleUrls: ['./car-detail.component.css'],
 })
 export class CarDetailComponent implements OnInit {
-  carDto: Cardto[] = [];
-  car: Car;
-
-
-  defaultPath = 'https://localhost:44322/Images/';
+  carDetail : Car;
+  cars: Car[] = [];
+  carImages: CarImage[] = [];
+  carImageBasePath = "https://localhost:44322/Images/";
 
   constructor(
-    private carService: CarService,
-    private cardtoService: CardtoService,
+    private carService : CarService,
+    private activatedRouted: ActivatedRoute,
     private carImageService: CarImageService,
-    private activatedRoute: ActivatedRoute,
     private toastrService:ToastrService,
-    private cartService:CartService
+    private cartService:CartService,
   ) {}
 
   ngOnInit(): void {
-    
-    this.activatedRoute.params.subscribe((params) => {
-      if (params['carId']) {
-        this.getCarDetailsbyCarId(params['carId']);
-        console.log("sfdgsdg")
+    this.activatedRouted.params.subscribe((params)=>{
+      if(params["carId"]){
+        this.getCarDetailsById(params["carId"]);
+        this.getCarImageByCarId(params["carId"]);
+      } else {
+
+        this.getCars();
       }
+
+    })
+  }
+
+  getCars() {
+    this.carService.getCars().subscribe((response) => {
+      this.cars = response.data;
     });
   }
 
-  getCarDetailsbyCarId(cardId: number) {
-    this.cardtoService.getCarDetailsbyCarId(cardId).subscribe((response) => {
-      this.carDto = response.data;
-
-      console.log(this.carDto);
-    });
+  getCarDetailsById(carId:number) {
+    this.carService.getCarDetailsById(carId).subscribe((response) => {
+        this.carDetail = response.data;
+      });
   }
 
-  addToCart(car:Cardto){
-
-    this.toastrService.success("Sepete eklendi",car.carName)
-    this.cartService.addToCart(car);
+  getCarImageByCarId(carId:number){
+    this.carImageService.getCarImageByCarId(this.activatedRouted.snapshot.params["carId"])
+      .subscribe((response) => {
+        this.carImages = response.data;
+      });
   }
 
+  getCurrentSlideClass(carImage:CarImage){
+    if (carImage === this.carImages[0]) {
+      return "carousel-item active"
+    }
+    return "carousel-item"
+  }
 
-
-
+  addToCart(car: Car) {
+    if (car.modelYear < 2020) {
+      this.toastrService.error(
+        'Bu araç kiralanamaz',
+        car.brandName + ' ' + car.carName
+      );
+    } else {
+      this.toastrService.success(
+        'Kiralama Sepetine Eklendi',
+        car.brandName + ' ' + car.carName
+      );
+      this.cartService.addToCart(car);
+    }
+  }
 
 }

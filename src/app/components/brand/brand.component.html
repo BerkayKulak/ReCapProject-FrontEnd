@@ -1,27 +1,26 @@
-<div class="mb-3">
-  <label for="filterText" class="form-label">Marka Ara</label>
-  <input
-    type="text"
-    [(ngModel)]="filterText"
-    class="form-control"
-    id="filterText"
-    placeholder="arama ifadesi giriniz"
-  />
-</div>
-<div *ngIf="filterText.length > 2" class="alert alert-primary">
-  {{ filterText }} aradınız
-</div>
-<!-- dsafdsfasd -->
+<div class="single category">
+  <div class="mb-3">
+    <label for="filterBrandText" class="form-label">Marka Ara</label>
+    <input
+      type="text"
+      [(ngModel)]="filterBrandText"
+      class="form-control"
+      id="filterBrandText"
+      placeholder="Marka adı yaz"
+    />
+  </div>
 
-<ul class="list-group">
-  <li [class]="getAllBrandClass()" routerLink="/cars">Markalar</li>
-  <li
-    (click)="setCurrentBrand(brand)"
-    routerLink="/cars/brand/{{ brand.brandId }}"
-    *ngFor="let brand of brands | brandPipe: filterText"
-    [class]="getCurrentBrandClass(brand)"
+  <h3 class="side-title">Tüm Markalar</h3>
+  <li class="mb-3"
+    (click)="cleanCurrentBrand()"
+    [class]="getAllBrandClass()"
+    routerLink="/cars"
   >
-    {{ brand.brandName }}
+    Hepsisini Göster
   </li>
-</ul>
-<h5 *ngIf="currentBrand">{{ currentBrand.brandName }} seçtiniz</h5>
+  <ul class="list-unstyled">
+    <li  (click)="setCurrentBrand(brand)"  routerLink="/cars/brand/{{ brand.id }}" *ngFor="let brand of brands | filterBrandPipe: filterBrandText"  [class]="getCurrentBrandClass(brand)">
+      <a href="" title="">{{ brand.brandName }}</a>
+    </li>
+  </ul>
+</div>

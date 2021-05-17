@@ -1,7 +1,6 @@
-import { Cardto } from "./cardto";
+import { Car } from "./car";
 
-export class CartItem
-{
-  car:Cardto;
-  quantity:number;
+export class CartItem{
+    car:Car;
+    quantity:number;
 }
