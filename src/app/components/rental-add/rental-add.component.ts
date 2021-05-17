@@ -42,6 +42,7 @@ export class RentalAddComponent implements OnInit {
       if (params['carId']) {
         this.getCarDetailsById(params['carId']);
         let currentUserId = parseInt(this.localStorageService.getCurrentUserId(),10);
+        console.log(currentUserId);
         this.getCustomerByUserId(currentUserId);
         this.createRentalAddForm();
       }

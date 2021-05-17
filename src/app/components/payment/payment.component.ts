@@ -38,7 +38,7 @@ export class PaymentComponent implements OnInit {
   rentalModel: Rental;
 
   selectedCardType: String = '';
-  cardTypes: any = ['PayPal', 'Debit Card', 'Credit Card'];
+  cardTypes: any = ['Master Card', 'Visa', 'Credit Card'];
 
   constructor(
     private toastrService: ToastrService,

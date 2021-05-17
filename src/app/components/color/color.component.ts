@@ -16,17 +16,20 @@ export class ColorComponent implements OnInit {
 
   ngOnInit(): void {
     this.getColors();
+
   }
 
   getColors(){
     this.colorService.getColors().subscribe((response)=>{
       this.colors = response.data
+
     })
   }
 
 
   setCurrentColor(color:Color) {
     this.currentColor = color;
+
   }
 
   getCurrentColorClass(color:Color){

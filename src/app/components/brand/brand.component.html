@@ -1,4 +1,4 @@
-<div class="single category">
+<div id="marka1" class="single category">
   <div class="mb-3">
     <label for="filterBrandText" class="form-label">Marka Ara</label>
     <input
@@ -19,7 +19,12 @@
     Hepsisini Göster
   </li>
   <ul class="list-unstyled">
-    <li  (click)="setCurrentBrand(brand)"  routerLink="/cars/brand/{{ brand.id }}" *ngFor="let brand of brands | filterBrandPipe: filterBrandText"  [class]="getCurrentBrandClass(brand)">
+    <li
+      (click)="setCurrentBrand(brand)"
+      routerLink="/cars/brand/{{ brand.id }}"
+      *ngFor="let brand of brands | filterBrandPipe: filterBrandText"
+      [class]="getCurrentBrandClass(brand)"
+    >
       <a href="" title="">{{ brand.brandName }}</a>
     </li>
   </ul>

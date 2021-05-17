@@ -19,7 +19,7 @@
     <li class="slider"></li>
 
 
-    <div >
+    <div *ngIf="isLogin()">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
        <span>{{currentUser}}</span>
       </button>

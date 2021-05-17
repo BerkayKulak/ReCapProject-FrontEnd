@@ -1,12 +1,22 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
 
-<body class="text-center">
-  <main class="form-signin">
-    <form [formGroup]="loginForm">
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
 
-      <h1 class="h3 mb-3 fw-normal">LogIn</h1>
 
-      <div class="form-floating">
-        <input
+
+</head>
+<body background="http://orig11.deviantart.net/20eb/f/2015/030/6/f/_minflat__dark_material_design_wallpaper__4k__by_dakoder-d8fjqzu.jpg">
+<div class="login-page">
+  <div class="form">
+   
+    <form [formGroup]="loginForm" class="login-form">
+      <input
         formControlName="email"
           type="email"
           class="form-control"
@@ -14,8 +24,6 @@
           placeholder="name@example.com"
         />
         <label for="floatingInput">Email</label>
-      </div>
-      <div class="form-floating">
         <input
         formControlName="password"
           type="password"
@@ -24,17 +32,13 @@
           placeholder="Password"
         />
         <label for="floatingPassword">Password</label>
-      </div>
-
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me" /> Remember Me!
-        </label>
-      </div>
-      <button class="w-100 btn btn-lg btn-primary" (click)="login()">
-        LogIn
-      </button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+        <button class="w-100 btn btn-lg btn-primary" (click)="login()">
+          LogIn
+        </button>
+     
     </form>
-  </main>
+ 
+  </div>
+</div>
 </body>
+</html>

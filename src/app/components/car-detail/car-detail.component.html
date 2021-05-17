@@ -49,6 +49,9 @@
             <p>
               {{ carDetail.description }}
             </p>
+            <strong>
+              Günlük Kiralama Ücreti {{ carDetail.dailyPrice | currency }}
+            </strong>
           </div>
         </div>
         <button id = "button1" (click)="addToCart(carDetail)" class="btn btn-primary mr-20">Add to Cart</button>
